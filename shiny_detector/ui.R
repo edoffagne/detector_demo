@@ -1,4 +1,5 @@
 library(shiny)
+library(shinycssloaders)
 
 # Define UI for data upload app ----
 ui <- fluidPage(
@@ -23,7 +24,7 @@ ui <- fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
 
-      imageOutput("myImage")
+      withSpinner(imageOutput("myImage"))
     )
 
   )

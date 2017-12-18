@@ -33,6 +33,7 @@ server <- function(input, output) {
     infile = input$file1$datapath
     # Resize the image to speedup the prediction
     resize_image(infile, infile)
+    cat("Image resized...\n")
     dir = dirname(infile)
     outfile = paste0(dir, "/out2")
     # Run the model on the image

@@ -1,27 +1,18 @@
 library(shiny)
 library(Rdarknet)
-library(OpenImageR)
+library(magick)
 
 resize_image = function(infile, outfile)
-{
-  image = readImage(infile)
-  # check if image is in landscape 
-  if (dim(image)[1] < dim(image)[2])
-  { width = 576
-    height = 768
-  }
+{ 
+  image = image_read(infile)
+  # check if image is in landscape
+  info = image_info(image) 
+  if (info$height < info$width) width = 576 
   # else portrait 
-  else
-  { width = 768
-    height = 576
-  }
-  resized = resizeImage(image, width = width,
-                        height = height,
-                        method = 'nearest')
-
-  writeImage(resized, outfile)
+  else width = 768 
+  resized = image_scale(image, width)
+  image_write(resized, path = outfile, format = "jpg")
 }
-
 
 
 # Define server logic to read selected file ----

@@ -2,16 +2,19 @@ library(shiny)
 library(Rdarknet)
 library(magick)
 
-resize_image = function(infile, outfile)
+resize_image = function(infile, outfile, min_width=576)
 { 
   image = image_read(infile)
-  # check if image is in landscape
-  info = image_info(image) 
-  if (info$height < info$width) width = 576 
-  # else portrait 
-  else width = 768 
-  resized = image_scale(image, width)
-  image_write(resized, path = outfile, format = "jpg")
+  info = image_info(image)
+   # check if the image needs to be resized
+  if (info$width > min_width)
+  { # check if the image is in landscape
+    if (info$height < info$width) width = min_width 
+    # else portrait 
+    else width = min_width 
+    resized = image_scale(image, width)
+    image_write(resized, path = outfile, format = "jpg")
+  }
 }
 
 
